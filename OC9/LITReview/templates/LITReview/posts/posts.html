@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/style.css' %}">
+</head>
+    <body>
+        {{header}}
+        <div class="container">
+            <div style="padding-top:100px;">
+            {% for post in posts %}
+                {% if post.content_type == 'TICKET' %}
+                    {% include 'LITReview/ticket/snippet_ticket.html' with ticket=post my_ticket=True modification=True %}
+                {% elif post.content_type == 'REVIEW' %}
+                    {% include 'LITReview/review/snippet_review.html' with review=post my_review=True modification=True in_review=True %}
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

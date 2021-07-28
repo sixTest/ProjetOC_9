@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/style.css' %}">
+</head>
+<body>
+    {{header}}
+    <div class="container">
+        {% if errors %}
+            <div style="padding-top:25px;">
+                <div class="alert alert-danger" role="alert" align="center">
+                    <p style="font-size:125%;">{{errors}}</p>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row" style="padding-top:50px;">
+            {% include 'LITReview/ticket/snippet_ticket.html' with ticket=ticket modification=False my_ticket=True %}
+        </div>
+        <div class="row" style="padding-top:25px;">
+            <form action="{% url 'modification_ticket' %}?id={{id_ticket}}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    <h4>Livre/Article</h4>
+                </div>
+                <div>
+                    <label for="{{form.title_ticket.id_for_label}}"></label>
+                    {{form.title_ticket}}
+                </div>
+                <div>
+                    <label for="{{form.description.id_for_label}}"></label>
+                    {{form.description}}
+                </div>
+                <div class="col-6">
+                    <label for="{{form.image.id_for_label}}"></label>
+                    {{form.image}}
+                </div>
+                <div align="end" style="margin:25px;">
+                    <button class="btn btn-primary" type="submit">Modifier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

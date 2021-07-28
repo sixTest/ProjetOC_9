@@ -1,0 +1,38 @@
+{% load static %}
+{% load extras %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {color: orange;}
+</style>
+    <div style="padding-top:25px;padding-bottom:25px;">
+    <div class="card">
+        <div class="card-header">
+            <h5>{{review.user}} a publié une critique</h5>
+            <p>{{review.time_created}}</p>
+        </div>
+        <div class="card-body">
+            <div>
+                <h3>{{review.headline}}</h3>
+                {% for r in review.rating|rating_stars %}
+                    {% if r %}
+                        <span class="fa fa-star checked" style="font-size:125%;"></span>
+                    {% else %}
+                        <span class="fa fa-star" style="font-size:125%;"></span>
+                    {% endif %}
+                {% endfor %}
+                <p style="margin:10px;">{{review.body}}</p>
+            </div>
+            {% include 'LITReview/ticket/snippet_ticket.html' with ticket=review.ticket modification=True my_ticket=False %}
+        </div>
+        {% if my_review and modification %}
+            <div class="row" style="margin:25px;">
+                <div class="col-11" align="end">
+                    <a href="modification_review?id={{review.id}}"><button class="btn btn-primary" type="button">Modifier</button></a>
+                </div>
+                <div class="col-1" align="start">
+                    <a href="posts?delete_id_review={{review.id}}"><button class="btn btn-secondary" type="button">Supprimer</button></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

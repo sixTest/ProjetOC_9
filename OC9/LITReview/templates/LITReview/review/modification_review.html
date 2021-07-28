@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load static %}
+{% load extras %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/style.css' %}">
+</head>
+<body>
+    {{header}}
+    <div class="container">
+        <div class="row" style="padding-top:50px;">
+            {% include 'LITReview/review/snippet_review.html' with review=review my_review=True in_review=True%}
+        </div>
+        <div class="row" style="padding-top:25px;">
+            <form action="{% url 'modification_review' %}?id={{id_review}}" method="post">
+                {% csrf_token %}
+                <div>
+                    <h4>Critique</h4>
+                </div>
+                <div>
+                    <label for="{{form_review.title_review.id_for_label}}"></label>
+                    {{form_review.title_review}}
+                </div>
+                <div class="row" style="padding-top:25px;">
+                    <div class="col-1"><h5>Note</h5></div>
+                    <div class="col-11">
+                        {% for r in review.rating|rating_champs %}
+                            {% if r == review.rating %}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" value="{{r}}" checked>
+                                    <label class="form-check-label" for="inlineRadio1">{{r}}</label>
+                                </div>
+                            {% else %}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" value="{{r}}">
+                                    <label class="form-check-label" for="inlineRadio1">{{r}}</label>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    <label for="{{form_review.comment.id_for_label}}"></label>
+                    {{form_review.comment}}
+                </div>
+                <div align="end" style="margin:25px;">
+                    <button class="btn btn-primary" type="submit">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

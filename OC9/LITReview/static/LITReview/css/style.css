@@ -1,0 +1,7 @@
+body, .linear-gradient {
+    background: linear-gradient(to right, #BCC2FE, #EBEDFF);
+}
+
+.nav-text {
+    font-size:150%;
+}

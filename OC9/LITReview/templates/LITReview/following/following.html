@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/style.css' %}">
+</head>
+<body>
+    {{header}}
+    <div class="container">
+        <div align="center" style="margin:100px;padding-right:100px;">
+            <h1 class="fw-light">Suivre d'autres utilisateurs</h1>
+        </div>
+        <div class="row" style="margin:50px;">
+            <form action="{% url 'following' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-10">
+                        <input type="text" class="form-control" placeholder="Nom utilisateur" name="follow">
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="submit">Envoyer</button>
+                    </div>
+                </div>
+            </form>
+            {% if errors %}
+                <div class="row" style="padding-top:50px;">
+                    <div class="alert alert-danger" role="alert" align="center">
+                        <p style="font-size:125%;">{{errors}}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% if followed %}
+        <div class="row" style="margin:50px;">
+            <div>
+                <h5>Abonnements</h5>
+            </div>
+            <div class="row" style="padding-top:15px;">
+                <div class="col-10" align="start">
+                    <ul class="list-group">
+                        {% for user in followed %}
+                            <li class="list-group-item">{{user.followed_user.username}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-2">
+                    {% for user in followed %}
+                    <div class="col-2">
+                        <div style="padding-top:2px;">
+                            <a href="following?unfollow={{user.followed_user.username}}"><button class="btn btn-primary" type="button">Désabonner</button></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if following %}
+        <div class="row" style="margin:50px;">
+            <div>
+                <h5>Abonnés</h5>
+            </div>
+            <div class="row" style="padding-top:15px;">
+                <div class="col-10" align="start">
+                    <ul class="list-group">
+                        {% for user in following %}
+                            <li class="list-group-item">{{user.user.username}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

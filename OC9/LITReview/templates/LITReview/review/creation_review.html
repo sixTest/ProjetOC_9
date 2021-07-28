@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/style.css' %}">
+</head>
+<body>
+    {{header}}
+    <div class="container">
+        <div class="row" style="padding-top:50px;">
+            {% include 'LITReview/ticket/snippet_ticket.html' with ticket=ticket modification=True my_ticket=False in_review=True %}
+        </div>
+        {% if errors %}
+            <div style="padding-top:25px;">
+                <div class="alert alert-danger" role="alert" align="center">
+                    <p style="font-size:125%;">{{errors}}</p>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row" style="margin:25px;">
+            <div>
+                <h3>Critique</h3>
+            </div>
+            <form action="{% url 'creation_review' %}?id_ticket={{id_ticket}}"  method="post">
+                {% csrf_token %}
+                <div>
+                    <label for="{{form_review.title_review.id_for_label}}"></label>
+                    {{form_review.title_review}}
+                </div>
+                <div class="row" style="padding-top:25px;">
+                    <div class="col-1"><h5>Note</h5></div>
+                    <div class="col-11">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
+                            <label class="form-check-label" for="inlineRadio4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">
+                            <label class="form-check-label" for="inlineRadio5">5</label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="{{form_review.comment.id_for_label}}"></label>
+                    {{form_review.comment}}
+                </div>
+                <div align="end" style="margin:25px;">
+                    <button class="btn btn-primary" type="submit">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

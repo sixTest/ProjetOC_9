@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'LITReview/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="row" align="center">
+            <h1>LITReview</h1>
+        </div>
+        <div class="col-12" style="padding-left:200px;padding-right:200px;padding-top:150px;">
+            <div id="inscription" align="end">
+                <h4 align="start">Inscrivez-vous</h4>
+                 <form action="{% url 'inscription' %}" method="post">
+                    {% csrf_token %}
+                    <label for="{{ form.name.id_for_label }}" style="padding-top:25px;"></label>
+                    {{form.username}}
+                    <label for="{{ form.mdp.id_for_label }}" style="padding-top:25px;"></label>
+                    {{form.password}}
+                    <label for="{{form.confirm_mdp.id_for_label}}" style="padding-top:25px"></label>
+                    {{form.confirm_password}}
+                    <div style="padding-top:35px;">
+                        <button class="btn btn-primary" type="submit" >S'inscrire</button>
+                        <a href="login"><button class="btn btn-primary" type="button">Retourner</button></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if errors %}
+            <div class="alert alert-danger" role="alert" align="center" style="margin:10%;">
+                <p style="font-size:125%;">{{errors}}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
